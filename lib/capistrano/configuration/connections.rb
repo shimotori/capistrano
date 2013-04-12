@@ -57,7 +57,7 @@ module Capistrano
 
         def connect_to(server)
           @options[:logger].debug "establishing connection to `#{server}' via gateway" if @options[:logger]
-          local_host = ServerDefinition.new("127.0.0.1", :user => server.user, :port => gateway_for(server).open(server.host, server.port || 22))
+          local_host = ServerDefinition.new("127.0.0.1", :user => server.user, :port => gateway_for(server).open(server.host, server.port || @options[:ssh_options][:port] || 22))
           session = SSH.connect(local_host, @options)
           session.xserver = server
           session
